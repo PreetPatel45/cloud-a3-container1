@@ -11,14 +11,14 @@ steps:
   - name: 'gcr.io/cloud-builders/kubectl'
     args: ['apply', '-f', 'container1.yaml']
     env:
-      - 'CLOUDSDK_COMPUTE_ZONE=us-central1-a'
+      - 'CLOUDSDK_COMPUTE_ZONE=us-central1-c'
       - 'CLOUDSDK_CONTAINER_CLUSTER=cloud-a3-cluster'
   
   # Update the deployment to use the new image tag
   - name: 'gcr.io/cloud-builders/kubectl'
     args: ['set', 'image', 'deployment/container1-deployment', 'container1=us-central1-docker.pkg.dev/$PROJECT_ID/cloud-a3/cloud-a3-c1:$COMMIT_SHA']
     env:
-      - 'CLOUDSDK_COMPUTE_ZONE=us-central1-a'
+      - 'CLOUDSDK_COMPUTE_ZONE=us-central1-c'
       - 'CLOUDSDK_CONTAINER_CLUSTER=cloud-a3-cluster'
 
 options:
