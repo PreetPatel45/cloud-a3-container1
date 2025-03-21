@@ -9,7 +9,7 @@ steps:
   
   # Apply the deployment file to create/update PVC, Deployment, and Service
   - name: 'gcr.io/cloud-builders/kubectl'
-    args: ['apply', '-f', 'container1.yaml']
+    args: ['apply', '-f', 'k8s-deployment1.yaml']
     env:
       - 'CLOUDSDK_COMPUTE_ZONE=us-central1-c'
       - 'CLOUDSDK_CONTAINER_CLUSTER=cloud-a3-cluster'
