@@ -1,0 +1,53 @@
+# PVC for shared storage (1Gi)
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: preet-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+# Deployment for Container 1
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: container1-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: container1
+  template:
+    metadata:
+      labels:
+        app: container1
+    spec:
+      containers:
+      - name: container1
+        image: us-central1-docker.pkg.dev/cloud-assigmnet3/cloud-a3/cloud-a3-c1
+        ports:
+        - containerPort: 6000
+        volumeMounts:
+        - name: shared-storage
+          mountPath: /preet_PV_dir
+      volumes:
+      - name: shared-storage
+        persistentVolumeClaim:
+          claimName: preet-pvc
+---
+# Service for Container 1
+apiVersion: v1
+kind: Service
+metadata:
+  name: container1-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: container1
+  ports:
+  - protocol: TCP
+    port: 6000
+    targetPort: 6000
